@@ -1,0 +1,53 @@
+f1 f2 f3 f4 request
+11	Адрес устройства	
+01	Функциональный код	
+00	Адрес первого регистра Hi байт
+13	Адрес первого регистра Lo байт
+00	Количество регистров Hi байт
+25	Количество регистров Lo байт
+0E	Контрольная сумма CRC
+84	Контрольная сумма CRC
+
+f5 f6
+11	Адрес устройства
+05	Функциональный код
+00	Адрес первого регистра Hi байт
+AC	Адрес первого регистра Lo байт
+FF	Значение Hi байт
+00	Значение Lo байт
+4E	Контрольная сумма CRC
+8B	Контрольная сумма CRC
+
+f15
+11	Адрес устройства
+0F	Функциональный код
+00	Адрес первого регистра Hi байт
+13	Адрес первого регистра Lo байт
+00	Количество регистров Hi байт
+0A	Количество регистров Lo байт
+02	Количество байт далее
+CD	Значение байт DO 27-20 (1100 1101)
+01	Значение байт DO 29-28 (0000 0001)
+BF	Контрольная сумма CRC
+0B	Контрольная сумма CRC
+
+f23 
+11     Slave Address 11
+17     Function 17
+00     Read Reference Address Hi
+04     Read Reference Address Lo
+00     Quantity to Read Hi
+06     Quantity to Read Lo
+00     Write Reference Address Hi
+of     Write Reference Address Lo
+00     Quantity to Write Hi
+03     Quantity to Write Lo
+06     Byte Count
+00     Write Data 1 Hi
+ff     Write Data 1 Lo
+00     Write Data 2 Hi
+ff     Write Data 2 Lo
+00     Write Data 3 Hi
+ff     Write Data 3 Lo
+**     CRC
+**     CRC

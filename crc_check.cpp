@@ -1,8 +1,9 @@
 #include <cstdint>
 
 #include "defs.h"
+#include "hex_utils.h"
 
-#define VERBOSE 1
+//#define VERBOSE 1
 
 #ifdef VERBOSE
 #include <iostream>
@@ -78,12 +79,30 @@ bool check_crc_rtu(const uchar_vect_t &buf,
         return true;
     }
     #ifdef VERBOSE
-    std::cout << "wrong crc must be hi " << (int)calculated_crc_hi
-              << " lo " << (int)calculated_crc_lo
-              << " got hi " << (int)received_crc_hi
-              << " lo " << (int)received_crc_lo << std::endl;
+    std::cout << "wrong crc must be hi " << to_hex(calculated_crc_hi)
+              << " lo " << to_hex(calculated_crc_lo)
+              << " got hi " << to_hex(received_crc_hi)
+              << " lo " << to_hex(received_crc_lo) << std::endl;
     #endif
     return false;
+}
+
+
+void calc_crc_rtu(const buffer_c& buf, 
+                  std::uint8_t &crc_hi,
+                  std::uint8_t &crc_lo)
+{
+    unsigned int index;
+    crc_hi = 0xFF;
+    crc_lo = 0xFF;
+    int ix = 0;
+    while( ix != buf.actual_size() )
+    {
+        index = crc_hi ^ buf[ix];
+        crc_hi = crc_lo ^ CRCHI[index];
+        crc_lo = CRCLO[index];
+        ix++;
+    }
 }
 
 } // namespace mb_scanner

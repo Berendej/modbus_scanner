@@ -48,6 +48,11 @@ constexpr uint16_t BUF_SIZE = 1024;
             m_actual_size = sz;
         }
 
+        void add(uint8_t uc)
+        {
+            (*this)[m_actual_size++] = uc;
+        }
+
     private:
         std::size_t m_actual_size;
     };
@@ -63,7 +68,7 @@ constexpr uint16_t BUF_SIZE = 1024;
         std::uint16_t m_i16_3;
         std::uint16_t m_i16_4;
         std::uint8_t  m_i8_1;
-        std::vector<std::uint8_t> m_data;
+        uchar_vect_t m_data;
 
         #define F1_REQ_STARTING_ADDRESS  m_i16_1
         #define F1_REQ_QUANTITY_OF_COILS m_i16_2

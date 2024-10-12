@@ -6,7 +6,7 @@
 #include "endians.h"
 #include "hex_utils.h"
 
-#define VERBOSE 1
+//#define VERBOSE 1
 
 #ifdef VERBOSE
 #include <iostream>
@@ -131,32 +131,36 @@ namespace mb_scanner
         case 1: case 2: case 3: case 4: case 5: case 6:
             break;
         case 23:
-            check_buf_end;
+            crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_3_hi = (*m_p_input)[m_ix];
             check_buf_end;
+            crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_3_lo = (*m_p_input)[m_ix];
             check_buf_end;
+            crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_4_hi = (*m_p_input)[m_ix];
             check_buf_end;
+            crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_4_lo = (*m_p_input)[m_ix];
             m_pdu.m_i16_3 = combine(i16_3_hi, i16_3_lo);
             m_pdu.m_i16_4 = combine(i16_4_hi, i16_4_lo);
+            check_buf_end;
             // do not break! fall though
         case 15: case 16:
             m_pdu.m_data.clear();
             crc_buf.push_back( (*m_p_input)[m_ix] );
             m_pdu.m_i8_1 = (*m_p_input)[m_ix];
+            #ifdef VERBOSE
+            std::cout << "get m_i8_1 " << to_hex(m_pdu.m_i8_1) << std::endl;
+            #endif
             check_buf_end;
             ix = 0;
             while( ix < m_pdu.m_i8_1 )
             {
                 crc_buf.push_back( (*m_p_input)[m_ix] );
                 m_pdu.m_data.push_back( (*m_p_input)[m_ix] );
-                ix++;          // input size
-                if ( ix < m_pdu.m_i8_1)
-                {
-                    check_buf_end;
-                }
+                check_buf_end;
+                ix++;
             }
         } // fc15 special case
 
@@ -176,7 +180,7 @@ namespace mb_scanner
         else // crc is wrong
         {
             #ifdef VERBOSE
-            std::cout << "invalid crc " << std::endl;
+            std::cout << "invalid crc " << to_hex(crc_buf) << std::endl;
             #endif
             m_nonse_cb(m_user);
             goto initial_state;

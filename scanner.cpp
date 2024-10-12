@@ -26,6 +26,26 @@ std::uint16_t combine(std::uint8_t hi, std::uint8_t lo)
     return res.m_ui16;
 }
 
+/*
+---------------
+01020304   - big
+04030201 ..- little
+0102     hi for big 02  
+*/
+void get_hi_lo(uint16_t reg, uint8_t &hi, uint8_t &lo)
+{
+    if ( endian_c::little )
+    {
+        lo = (uint8_t)reg;
+        hi = (uint8_t)(reg >> 8);
+    }
+    else
+    {
+        hi = (uint8_t)reg;
+        lo = (uint8_t)(reg >> 8);
+    }
+}
+
 bool valid_fc(std::uint8_t f)
 {
     switch(f)
@@ -36,5 +56,6 @@ bool valid_fc(std::uint8_t f)
     }
     return false;
 }
+
 
 } // namespace mb_scanner

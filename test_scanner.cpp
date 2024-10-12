@@ -11,40 +11,40 @@ class scanner_user_c
         switch( pdu.m_fc)
         {
         case 1:
-            std::cout << "\n F1_STARTING_ADDRESS  " << pdu.F1_REQ_STARTING_ADDRESS
-                      << "\n F1_QUANTITY_OF_COILS " << pdu.F1_REQ_QUANTITY_OF_COILS 
+            std::cout << "\n F1_STARTING_ADDRESS  " << (int)pdu.F1_REQ_STARTING_ADDRESS
+                      << "\n F1_QUANTITY_OF_COILS " << (int)pdu.F1_REQ_QUANTITY_OF_COILS 
                       << std::endl;
             break;
         case 2:
-            std::cout << "\n F2_REQ_STARTING_ADDRESS  " << pdu.F2_REQ_STARTING_ADDRESS
-                      << "\n F2_REQ_QUANTITY_OF_INPUTS " << pdu.F2_REQ_QUANTITY_OF_INPUTS 
+            std::cout << "\n F2_REQ_STARTING_ADDRESS  " << (int)pdu.F2_REQ_STARTING_ADDRESS
+                      << "\n F2_REQ_QUANTITY_OF_INPUTS " << (int)pdu.F2_REQ_QUANTITY_OF_INPUTS 
                       << std::endl;
             break;
         case 3:
-            std::cout << "\n F3_REQ_STARTING_ADDRESS  " << pdu. F3_REQ_STARTING_ADDRESS
-                      << "\n F3_REQ_QUANTITY_OF_REGS  " << pdu. F3_REQ_QUANTITY_OF_REGS
+            std::cout << "\n F3_REQ_STARTING_ADDRESS  " << (int)pdu.F3_REQ_STARTING_ADDRESS
+                      << "\n F3_REQ_QUANTITY_OF_REGS  " << (int)pdu.F3_REQ_QUANTITY_OF_REGS
                       << std::endl;
 
             break;
         case 4:
-            std::cout << "\n F4_REQ_STARTING_ADDRESS " <<  pdu.F4_REQ_STARTING_ADDRESS
-                      << "\n F4_REQ_QUANTITY_OF_REGS " << pdu.F4_REQ_QUANTITY_OF_REGS
+            std::cout << "\n F4_REQ_STARTING_ADDRESS " <<  (int)pdu.F4_REQ_STARTING_ADDRESS
+                      << "\n F4_REQ_QUANTITY_OF_REGS " << (int)pdu.F4_REQ_QUANTITY_OF_REGS
                       << std::endl;
             break;
         case 5:
-            std::cout << "\n F5_REQ_OUTPUT_ADDRESS " <<  pdu.F5_REQ_OUTPUT_ADDRESS
-                      << "\n F5_REQ_OUTPUT_VALUE " << pdu.F5_REQ_OUTPUT_VALUE
+            std::cout << "\n F5_REQ_OUTPUT_ADDRESS " <<  (int)pdu.F5_REQ_OUTPUT_ADDRESS
+                      << "\n F5_REQ_OUTPUT_VALUE " << (int)pdu.F5_REQ_OUTPUT_VALUE
                       << std::endl;
             break;
         case 6:
-            std::cout << "\n F6_REQ_REG_ADDRESS " << pdu.F6_REQ_REG_ADDRESS
-                      << "\n F6_REQ_REG_VALUE " << pdu.F6_REQ_REG_VALUE
+            std::cout << "\n F6_REQ_REG_ADDRESS " << (int)pdu.F6_REQ_REG_ADDRESS
+                      << "\n F6_REQ_REG_VALUE " << (int)pdu.F6_REQ_REG_VALUE
                       << std::endl;
             break;
         case 15:
-            std::cout <<  "\n F15_REQ_STARTING_ADDRESS " << pdu.F15_REQ_STARTING_ADDRESS
-                      <<  "\n F15_REQ_QUANTITY_OF_OUTPUTS " << pdu.F15_REQ_QUANTITY_OF_OUTPUTS
-                      <<  "\n F15_REQ_BYTE_COUNT " << pdu.F15_REQ_BYTE_COUNT
+            std::cout <<  "\n F15_REQ_STARTING_ADDRESS " << (int)pdu.F15_REQ_STARTING_ADDRESS
+                      <<  "\n F15_REQ_QUANTITY_OF_OUTPUTS " << (int)pdu.F15_REQ_QUANTITY_OF_OUTPUTS
+                      <<  "\n F15_REQ_BYTE_COUNT " << (int)pdu.F15_REQ_BYTE_COUNT
                       << std::endl;
             for(auto uc : pdu.m_data )
             { 
@@ -53,9 +53,9 @@ class scanner_user_c
             std::cout << std::endl;
             break;
         case 16:
-            std::cout << "\n F16_REQ_STARTING_ADDRESS " << pdu.F16_REQ_STARTING_ADDRESS
-                      << "\n F16_REQ_QUANTITY_OF_REGS " << pdu.F16_REQ_QUANTITY_OF_REGS
-                      << "\n F16_REQ_BYTE_COUNT " << pdu.F16_REQ_BYTE_COUNT
+            std::cout << "\n F16_REQ_STARTING_ADDRESS " << (int)pdu.F16_REQ_STARTING_ADDRESS
+                      << "\n F16_REQ_QUANTITY_OF_REGS " << (int)pdu.F16_REQ_QUANTITY_OF_REGS
+                      << "\n F16_REQ_BYTE_COUNT " << (int)pdu.F16_REQ_BYTE_COUNT
                       << std::endl;
             for(auto uc : pdu.m_data )
             { 
@@ -64,11 +64,11 @@ class scanner_user_c
             std::cout << std::endl;
             break;
         case 23:
-            std::cout << "\n F23_REQ_READ_STARTING_ADDRESS " << pdu.F23_REQ_READ_STARTING_ADDRESS
-                      << "\n F23_REQ_QUANTITY_TO_READ " << pdu.F23_REQ_QUANTITY_TO_READ
-                      << "\n F23_REQ_WRITE_STARTING_ADDRESS " << pdu.F23_REQ_WRITE_STARTING_ADDRESS
-                      << "\n F23_REQ_QUANTITY_TO_WRITE " << pdu.F23_REQ_QUANTITY_TO_WRITE
-                      << "\n F23_REQ_WRITE_BYTE_COUNT " << pdu.F23_REQ_WRITE_BYTE_COUNT
+            std::cout << "\n F23_REQ_READ_STARTING_ADDRESS " << (int)pdu.F23_REQ_READ_STARTING_ADDRESS
+                      << "\n F23_REQ_QUANTITY_TO_READ " << (int)pdu.F23_REQ_QUANTITY_TO_READ
+                      << "\n F23_REQ_WRITE_STARTING_ADDRESS " << (int)pdu.F23_REQ_WRITE_STARTING_ADDRESS
+                      << "\n F23_REQ_QUANTITY_TO_WRITE " << (int)pdu.F23_REQ_QUANTITY_TO_WRITE
+                      << "\n F23_REQ_WRITE_BYTE_COUNT " << (int)pdu.F23_REQ_WRITE_BYTE_COUNT
                       << std::endl;
             for(auto uc : pdu.m_data )
             { 

@@ -18,6 +18,16 @@ std::string to_hex(std::uint8_t uc)
     return res;
 } 
 
+std::string to_hex(const uchar_vect_t& uv)
+{
+    std::string res; 
+    for(auto uc : uv )
+    {
+        res += to_hex(uc);
+        res += " ";
+    }
+    return res;
+}
 
 std::string to_hex(const buffer_c &ar, const std::size_t length)
 {

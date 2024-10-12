@@ -117,22 +117,14 @@ void server_connection_c::on_pdu(const mb_scanner::pdu_c& pdu)
                       <<  "\n F15_REQ_QUANTITY_OF_OUTPUTS " << (int)pdu.F15_REQ_QUANTITY_OF_OUTPUTS
                       <<  "\n F15_REQ_BYTE_COUNT " << (int)pdu.F15_REQ_BYTE_COUNT
                       << std::endl;
-            for(auto uc : pdu.m_data )
-            { 
-                std::cout << (int)uc << " ";
-            }
-            std::cout << std::endl;
+            std::cout << "values: " << mb_scanner::to_hex(pdu.m_data) << std::endl;
             break;
         case 16:
             std::cout << "\n F16_REQ_STARTING_ADDRESS " << (int)pdu.F16_REQ_STARTING_ADDRESS
                       << "\n F16_REQ_QUANTITY_OF_REGS " << (int)pdu.F16_REQ_QUANTITY_OF_REGS
                       << "\n F16_REQ_BYTE_COUNT " << (int)pdu.F16_REQ_BYTE_COUNT
                       << std::endl;
-            for(auto uc : pdu.m_data )
-            { 
-                std::cout << (int)uc << " ";
-            }
-            std::cout << std::endl;
+            std::cout << "values: " << mb_scanner::to_hex(pdu.m_data) << std::endl;
             break;
         case 23:
             std::cout << "\n F23_REQ_READ_STARTING_ADDRESS " << (int)pdu.F23_REQ_READ_STARTING_ADDRESS
@@ -141,11 +133,7 @@ void server_connection_c::on_pdu(const mb_scanner::pdu_c& pdu)
                       << "\n F23_REQ_QUANTITY_TO_WRITE " << (int)pdu.F23_REQ_QUANTITY_TO_WRITE
                       << "\n F23_REQ_WRITE_BYTE_COUNT " << (int)pdu.F23_REQ_WRITE_BYTE_COUNT
                       << std::endl;
-            for(auto uc : pdu.m_data )
-            { 
-                std::cout << (int)uc << " ";
-            }
-            std::cout << std::endl;
+            std::cout << "values: " << mb_scanner::to_hex(pdu.m_data) << std::endl;
             break;
         }
 }
