@@ -1,8 +1,5 @@
 #pragma once 
 
-#include <boost/coroutine2/all.hpp>
-#include <vector>
-
 #include "scanner.h"
 
 namespace mb_scanner

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "defs.h"
+#include <boost/coroutine2/all.hpp>
 
 namespace mb_scanner
 {

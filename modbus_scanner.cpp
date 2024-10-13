@@ -1,6 +1,7 @@
 #include "defs.h"
 #include "slave_rtu_scanner.h"
 #include "slave_tcp_scanner.h"
+#include "slave_rtu_old.h"
 
 namespace mb_scanner
 {
@@ -18,6 +19,11 @@ namespace mb_scanner
                                                    pdu_cb, err_cb, 
                                                    nonse_cb, user );
             break;
+        case protocol_e::slave_rtu_old:
+            return (void*) new slave_rtu_old_c(address, 
+                                                   pdu_cb, err_cb, 
+                                                   nonse_cb, user );
+
         case protocol_e::slave_tcp:
             return (void*) new slave_tcp_scanner_c(address, 
                                                    pdu_cb, err_cb, 

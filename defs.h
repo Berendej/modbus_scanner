@@ -17,7 +17,8 @@ namespace mb_scanner
         master_tcp,
         slave_rtu,
         slave_ascii,
-        slave_tcp
+        slave_tcp,
+        slave_rtu_old
     };
 
 constexpr uint16_t BUF_SIZE = 1024;
