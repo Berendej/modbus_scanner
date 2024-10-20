@@ -15,14 +15,14 @@ add_executable( speed_test speed_test.cpp )
 
 add_executable( test_scanner mb_scanner_test.cpp )
 
-add_executable( tcp_server ./tcp_server/tcp_server.cpp ./tcp_server/server_connection.cpp )
+add_executable( tcp_server_example ./tcp_server/tcp_server.cpp ./tcp_server/server_connection.cpp )
 
-add_executable( rtu_server ./rtu_server/rtu_server.cpp ./rtu_server/rtu_server_data_handler.cpp )
+add_executable( rtu_server_example ./rtu_server/rtu_server.cpp ./rtu_server/rtu_server_data_handler.cpp )
 
 target_link_libraries( modbus_scanner ${Boost_LIBRARIES} )
 target_link_libraries( speed_test PRIVATE modbus_scanner )
-target_link_libraries( rtu_server PRIVATE modbus_scanner )
-target_link_libraries( tcp_server PRIVATE modbus_scanner )
+target_link_libraries( rtu_server_example PRIVATE modbus_scanner )
+target_link_libraries( tcp_server_example PRIVATE modbus_scanner )
 target_link_libraries( test_scanner PRIVATE modbus_scanner ${Boost_LIBRARIES} )
 
 # package part which enables
@@ -38,4 +38,4 @@ include(CPack)
 
 # cmake --build . --target test
 enable_testing()
-add_test(heap_alloc_test  test_scanner)
+add_test(md_scanner_test  test_scanner)
