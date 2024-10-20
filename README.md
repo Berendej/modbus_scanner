@@ -24,6 +24,6 @@ On the other hand coroutine approach has only one function which is responsible 
 It significantly reduces amount of code, make it more easy to track state transitions. In fact every coroutine function operator itself defines new scanning state and it costs nothing to programmer.
 
 So the advantage of coroutine approach in terms of programming efforts is obvious, but what about 
-efficiency? Context switching on coroutine entrance and switching back on exit is not free. In this project speed test was implemented which compareы time spent on scanning by coroutine-based scanner and oridinary approach scanner. It shows that coroutine-based scanner is slightly faster (43 seconds coroutine vs 48 seconds ordinary ).
+efficiency? Context switching on coroutine entrance and switching back on exit is not free. In this project speed test was implemented which compares time spent on scanning by coroutine-based scanner and oridinary approach scanner. It shows that coroutine-based scanner is slightly faster (43 seconds coroutine vs 48 seconds ordinary ).
 
-The purpose of this project was not to implement Yet_Another_Modbus_Server but rather to make a pattern to be used for implementing more sophisticated protocols scanner or some other tasks which require FSM. 
+The purpose of this project is not to implement Yet_Another_Modbus_Server but rather to make a pattern to be used for implementing more sophisticated protocol scanners or some other tasks which require FSM. But still the project includes sample MODBUS rtu server (rtu_server_example) and MODBUS tcp server (tcp_server_example) both based on boost::asio and this modbus_scan library. 
