@@ -14,7 +14,7 @@ rtu_server_data_handler_c::rtu_server_data_handler_c(boost::asio::io_service &io
     , m_sec_timer(io_service, std::chrono::seconds{1})
     , m_dev_address(dev_address)
 {
-    m_p_modbus_scanner = mb_scanner::create_scanner(mb_scanner::protocol_e::slave_rtu_old, 
+    m_p_modbus_scanner = mb_scanner::create_scanner(mb_scanner::protocol_e::slave_rtu, 
         m_dev_address, // address 255
         on_pdu_aux,
         on_error_aux,

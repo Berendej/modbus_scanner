@@ -55,11 +55,7 @@ namespace mb_scanner
         uchar_vect_t crc_buf;
         uint8_t crc_hi = 0;
         uint8_t crc_low = 0;
-        // initially at first call 
-        // jump over initial state
-        #ifdef VERBOSE
-        std::cout << "first call" << std::endl;
-        #endif
+        // initially at first call skip initial state
         crc_buf.reserve(256);
         goto pre_address_state;
     initial_state:
@@ -70,9 +66,6 @@ namespace mb_scanner
     pre_address_state: 
         sink(m_p_input);
     address_state:
-        #ifdef VERBOSE
-        std::cout << "address_state" << std::endl;
-        #endif
         while ( m_ix != m_p_input->actual_size() && 
                 m_address != (*m_p_input)[m_ix] )
         {
@@ -81,14 +74,11 @@ namespace mb_scanner
         if (m_ix == m_p_input->actual_size() )
         {
             // not our address and the whole chunk scanned
-            #ifdef VERBOSE
-            std::cout << "not my address" << std::endl;
-            #endif
             goto initial_state;
         }
         // got our address
         #ifdef VERBOSE
-        std::cout << "got address " << std::endl;
+        std::cout << "address ok" << std::endl;
         #endif
         crc_buf.push_back((*m_p_input)[m_ix]);
         check_buf_end;
@@ -104,57 +94,87 @@ namespace mb_scanner
             std::cout << "invalid fc " << (int)(*m_p_input)[m_ix] << std::endl;
             #endif
             m_nonse_cb(m_user);
-             goto initial_state;
+            goto initial_state;
         }
-        #ifdef VERBOSE
-        std::cout << "fc " << fc << std::endl;
-        #endif
         check_buf_end;
-    // state first reg addr hi
+    // state i16_1 hi        
         crc_buf.push_back( (*m_p_input)[m_ix] );
         i16_1_hi = (*m_p_input)[m_ix];
+        #ifdef VERBOSE
+        std::cout << "i16_1_hi " << (int )i16_1_hi << std::endl;
+        #endif
         check_buf_end;
-    // state first reg addr low
+    // state i16_1 low
         crc_buf.push_back( (*m_p_input)[m_ix] );
         i16_1_lo = (*m_p_input)[m_ix];
+        #ifdef VERBOSE
+        std::cout << "i16_1_lo " << (int )i16_1_lo << std::endl;
+        #endif
         check_buf_end;
+    // state i16_2 hi
         crc_buf.push_back((*m_p_input)[m_ix]);
         i16_2_hi = (*m_p_input)[m_ix];
+        #ifdef VERBOSE
+        std::cout << "i16_2_hi " << (int )i16_2_hi << std::endl;
+        #endif
         check_buf_end;
-    // state num reg low
+    // state i16_2 lo
         crc_buf.push_back( (*m_p_input)[m_ix] );
         i16_2_lo = (*m_p_input)[m_ix] ;
+        #ifdef VERBOSE
+        std::cout << "i16_2_lo " << (int )i16_2_lo << std::endl;
+        #endif
         check_buf_end;
-
         switch( fc )
         {
         case 1: case 2: case 3: case 4: case 5: case 6:
             break;
         case 23:
+            // state i16_3 hi
             crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_3_hi = (*m_p_input)[m_ix];
+            #ifdef VERBOSE
+            std::cout << "i16_3_hi " << (int )i16_3_hi << std::endl;
+            #endif
             check_buf_end;
+            // state i16_3 lo
             crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_3_lo = (*m_p_input)[m_ix];
+            #ifdef VERBOSE
+            std::cout << "i16_3_lo " << (int )i16_3_lo << std::endl;
+            #endif
             check_buf_end;
+            // state i16_4 hi
             crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_4_hi = (*m_p_input)[m_ix];
+            #ifdef VERBOSE
+            std::cout << "i16_4_hi " << (int )i16_4_hi << std::endl;
+            #endif
             check_buf_end;
+            // state i16_4 lo
             crc_buf.push_back( (*m_p_input)[m_ix] );
             i16_4_lo = (*m_p_input)[m_ix];
+            #ifdef VERBOSE
+            std::cout << "i16_4_lo " << (int )i16_4_lo << std::endl;
+            #endif
             m_pdu.m_i16_3 = combine(i16_3_hi, i16_3_lo);
             m_pdu.m_i16_4 = combine(i16_4_hi, i16_4_lo);
             check_buf_end;
             // do not break! fall though
         case 15: case 16:
             m_pdu.m_data.clear();
+            // state i8_1
             crc_buf.push_back( (*m_p_input)[m_ix] );
             m_pdu.m_i8_1 = (*m_p_input)[m_ix];
             #ifdef VERBOSE
-            std::cout << "get m_i8_1 " << to_hex(m_pdu.m_i8_1) << std::endl;
+            std::cout << "i8_1 " << (int )m_pdu.m_i8_1 << std::endl;
             #endif
             check_buf_end;
             ix = 0;
+            // state data
+            #ifdef VERBOSE
+            std::cout << "enter data state " <<  std::endl;
+            #endif
             while( ix < m_pdu.m_i8_1 )
             {
                 crc_buf.push_back( (*m_p_input)[m_ix] );
@@ -162,8 +182,10 @@ namespace mb_scanner
                 check_buf_end;
                 ix++;
             }
-        } // fc15 special case
-
+            #ifdef VERBOSE
+            std::cout << "leave data state " <<  std::endl;
+            #endif
+        }
     // state crc hi
         crc_hi = (*m_p_input)[m_ix];
         check_buf_end;
@@ -171,11 +193,14 @@ namespace mb_scanner
         crc_low = (*m_p_input)[m_ix];
         if (check_crc_rtu(crc_buf, crc_hi, crc_low))
         {
+            #ifdef VERBOSE
+            std::cout << "pdu ok " << std::endl;
+            #endif
             m_pdu.m_i16_1 = combine(i16_1_hi, i16_1_lo);
             m_pdu.m_i16_2 = combine(i16_2_hi, i16_2_lo);
             m_pdu.m_fc = fc;
             m_pdu_cb(m_user, m_pdu);
-            check_buf_end; // ?
+            check_buf_end;
         }
         else // crc is wrong
         {

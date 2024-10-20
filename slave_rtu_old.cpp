@@ -1,5 +1,5 @@
 #include "slave_rtu_old.h"
-#define VERBOSE 1
+//#define VERBOSE 1
 
 #ifdef VERBOSE
 #include <iostream>
@@ -293,45 +293,12 @@ void slave_rtu_old_c::log_msg(const char* msg)
     #endif
 }
 
-void slave_rtu_old_c::process_pdu()
-{
-    // check if crc is valid:
-    if( !check_crc_rtu(m_crc_buffer, m_crc1, m_crc2 ))
-    {
-        // response with an error
-        log_msg("crc is wrong");
-        /*
-            If the server receives the request, but detects
-            a communication error (parity, LRC, CRC, ...),
-            no response is returned. The client program will
-            eventually process a timeout condition for the
-            request.
-        */
-        m_nonse_cb(m_user);
-    }
-    else
-    {
-        // all right - response with a data
-        m_pdu.m_fc = m_fc;
-        m_pdu.m_i16_1 = combine(m_i16_1_hi, m_i16_1_lo);
-        m_pdu.m_i16_2 = combine(m_i16_2_hi, m_i16_2_lo);
-        m_pdu.m_i8_1 = m_i8_1;
-        m_pdu.m_fc = m_fc;
-        m_pdu.m_i16_3 = combine(m_i16_3_hi, m_i16_3_lo);
-        m_pdu.m_i16_4 = combine(m_i16_4_hi, m_i16_4_lo);
-        log_msg("crc is good");
-        m_pdu_cb(m_user, m_pdu);
-    }
-    switch_state(init_state_e);
-}
-
 void i16_3_hi_state::on_char(std::uint8_t c)
 {
     m_p_owner->m_i16_3_hi = c;
     m_p_owner->put_in_buffer(c);
     m_p_owner->switch_state(i16_3_lo_state_e);
 }
-
 
 void i16_3_lo_state::on_char(std::uint8_t c)
 {
@@ -416,6 +383,38 @@ void diag_data_2_rtu_s_state::on_char(std::uint8_t c)
     m_p_owner->set_diag_data2(c);
     m_p_owner->put_in_buffer(c);
     m_p_owner->switch_state(checksum_1_state_e);
+}
+
+void slave_rtu_old_c::process_pdu()
+{
+    // check if crc is valid:
+    if( !check_crc_rtu(m_crc_buffer, m_crc1, m_crc2 ))
+    {
+        // response with an error
+        log_msg("crc is wrong");
+        /*
+            If the server receives the request, but detects
+            a communication error (parity, LRC, CRC, ...),
+            no response is returned. The client program will
+            eventually process a timeout condition for the
+            request.
+        */
+        m_nonse_cb(m_user);
+    }
+    else
+    {
+        // all right - response with a data
+        m_pdu.m_fc = m_fc;
+        m_pdu.m_i16_1 = combine(m_i16_1_hi, m_i16_1_lo);
+        m_pdu.m_i16_2 = combine(m_i16_2_hi, m_i16_2_lo);
+        m_pdu.m_i8_1 = m_i8_1;
+        m_pdu.m_fc = m_fc;
+        m_pdu.m_i16_3 = combine(m_i16_3_hi, m_i16_3_lo);
+        m_pdu.m_i16_4 = combine(m_i16_4_hi, m_i16_4_lo);
+        log_msg("crc is good");
+        m_pdu_cb(m_user, m_pdu);
+    }
+    switch_state(init_state_e);
 }
 
 } // namespace mb_scanner
